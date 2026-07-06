@@ -13,6 +13,8 @@ import AddCarBookingPage from "./pages/Add_car_page.jsx";
 import EditCarPage from "./pages/Edit_Car_Page.jsx";
 import SuccessPage from "./pages/SuccessPage.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import EnlistCar from "./pages/EnlistCar.jsx";
+import HostDashboard from "./pages/HostDashboard.jsx";
 
 const ProtectedRoute = ({ element: Component, ...rest }) => {
 	const { cookies, navigate, setUser, setIsAdmin } = useContext(AppContext);
@@ -65,6 +67,14 @@ function App() {
 					<Route
 						path="/success"
 						element={<ProtectedRoute element={SuccessPage} />}
+					/>
+					<Route
+						path="/enlist-car"
+						element={<ProtectedRoute element={EnlistCar} />}
+					/>
+					<Route
+						path="/host-dashboard"
+						element={<ProtectedRoute element={HostDashboard} />}
 					/>
 				</Routes>
 			</ErrorBoundary>

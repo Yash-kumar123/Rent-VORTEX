@@ -101,6 +101,18 @@ const GetAllBookings = () => {
 										<p className="text-sm text-gray-500">
 											Type: {booking.car.type}
 										</p>
+										<div className="mt-2 flex items-center justify-between border-t pt-2">
+											<span className="text-xs text-gray-400 font-semibold">Status:</span>
+											<span className={`px-2.5 py-0.5 text-[10px] font-bold rounded-full ${
+												booking.status === "Approved"
+													? "bg-green-100 text-green-800"
+													: booking.status === "Rejected"
+													? "bg-red-100 text-red-800"
+													: "bg-yellow-100 text-yellow-800"
+											}`}>
+												{booking.status || "Pending"}
+											</span>
+										</div>
 										<p className="text-sm text-gray-500">
 											Location:{" "}
 											{booking.location && booking.location.lat && booking.location.lng ? (

@@ -39,6 +39,15 @@ const carSchema = new mongoose.Schema(
 				},
 			},
 		],
+		owner: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "users",
+			default: null,
+		},
+		location: {
+			lat: { type: Number, default: 28.6139 },
+			lng: { type: Number, default: 77.209 },
+		},
 	},
 	{
 		timestamps: true,

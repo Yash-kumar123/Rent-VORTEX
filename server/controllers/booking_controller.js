@@ -88,3 +88,63 @@ exports.createPaymentIntent = async (req, res) => {
 		});
 	}
 };
+
+exports.getOwnerBookings = async (req, res) => {
+	try {
+		const { ownerId } = req.params;
+		const bookings = await Booking.find().populate(["car", "user"]);
+		const ownerBookings = bookings.filter(
+			(b) => b.car && b.car.owner && b.car.owner.toString() === ownerId
+		);
+		res.status(200).json({
+			success: true,
+			data: ownerBookings,
+		});
+	} catch (error) {
+		console.error("Error getting owner bookings:", error);
+		res.status(500).json({
+			success: false,
+			message: "Failed to load owner bookings",
+			error: error.message,
+		});
+	}
+};
+
+exports.updateBookingStatus = async (req, res) => {
+	const { bookingId, status } = req.body;
+	try {
+		const booking = await Booking.findById(bookingId);
+		if (!booking) {
+			return res.status(404).json({ success: false, message: "Booking not found" });
+		}
+
+		booking.status = status;
+		await booking.save();
+
+		// If rejected, remove the booked timeslot from the car document
+		if (status === "Rejected") {
+			const car = await Car.findById(booking.car);
+			if (car) {
+				car.bookedTimeSlots = car.bookedTimeSlots.filter(
+					(slot) =>
+						slot.from !== booking.bookedTimeSlots.from ||
+						slot.to !== booking.bookedTimeSlots.to
+				);
+				await car.save();
+			}
+		}
+
+		res.status(200).json({
+			success: true,
+			message: `Booking status updated to ${status}`,
+			data: booking,
+		});
+	} catch (error) {
+		console.error("Error updating booking status:", error);
+		res.status(500).json({
+			success: false,
+			message: "Failed to update booking status",
+			error: error.message,
+		});
+	}
+};
