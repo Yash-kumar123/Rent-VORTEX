@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { json, useNavigate } from "react-router-dom";
 import { CookiesProvider, useCookies } from "react-cookie";
-import axios from "axios";
+import api from "../services/api";
 
 export const AppContext = createContext();
 
@@ -12,15 +12,13 @@ function AppContextProvider({ children }) {
 	const navigate = useNavigate();
 	const [cars, setCars] = useState([]);
 	const [bookings, setBookings] = useState([]);
-	// const BASE_URL = "http://localhost:5500/api/v1";
-	const BASE_URL = import.meta.env.VITE_API_URL || "https://rent-vortex.onrender.com/api/v1";
 	const [cookies, setCookie, removeCookie] = useCookies();
 
 	async function handleLogin(data) {
 		setLoading(true);
 
 		try {
-			const response = await axios.post(`${BASE_URL}/login`, data);
+			const response = await api.post("/login", data);
 			console.log("Login successful:", response.data);
 
 			setUser(response.data.exisitingUser);
@@ -44,7 +42,7 @@ function AppContextProvider({ children }) {
 		setLoading(true);
 		try {
 			data.role = "User";
-			const response = await axios.post(`${BASE_URL}/register`, data);
+			const response = await api.post("/register", data);
 			console.log("Register:", response);
 
 			navigate("/login");
@@ -73,7 +71,7 @@ function AppContextProvider({ children }) {
 	}
 
 	useEffect(() => {
-		const interceptor = axios.interceptors.response.use(
+		const interceptor = api.interceptors.response.use(
 			(response) => response,
 			(error) => {
 				if (error.response && error.response.status === 401) {
@@ -84,14 +82,14 @@ function AppContextProvider({ children }) {
 			}
 		);
 		return () => {
-			axios.interceptors.response.eject(interceptor);
+			api.interceptors.response.eject(interceptor);
 		};
 	}, []);
 
 	async function getAllCars() {
 		setLoading(true);
 		try {
-			const res = await axios.get(`${BASE_URL}/getallcars`);
+			const res = await api.get("/getallcars");
 			setCars(res.data);
 			// console.log(res);
 		} catch (err) {
@@ -105,7 +103,7 @@ function AppContextProvider({ children }) {
 		try {
 			carData.capacity = Number(carData.capacity);
 			carData.rentPerHour = Number(carData.rentPerHour);
-			const response = await axios.post(`${BASE_URL}/addCar`, carData);
+			const response = await api.post("/addCar", carData);
 			console.log(response);
 
 			if (response.statusText === "OK") {
@@ -123,7 +121,7 @@ function AppContextProvider({ children }) {
 		try {
 			carData.capacity = Number(carData.capacity);
 			carData.rentPerHour = Number(carData.rentPerHour);
-			const response = await axios.post(`${BASE_URL}/editcar`, carData);
+			const response = await api.post("/editcar", carData);
 
 			if (response.status === 200) {
 				return response;
@@ -137,7 +135,7 @@ function AppContextProvider({ children }) {
 	async function makeBooking(bookingData) {
 		setLoading(true);
 		try {
-			await axios.post(`${BASE_URL}/bookCar`, bookingData);
+			await api.post("/bookCar", bookingData);
 			await getAllCars();
 		} catch (err) {
 			console.error("Error making booking", err);
@@ -148,7 +146,7 @@ function AppContextProvider({ children }) {
 	async function getAllBookings() {
 		setLoading(true);
 		try {
-			const res = await axios.get(`${BASE_URL}/getAllBookings`);
+			const res = await api.get("/getAllBookings");
 			setBookings(res.data);
 		} catch (err) {
 			console.error("Error getting booking data", err);
@@ -159,7 +157,7 @@ function AppContextProvider({ children }) {
 	async function cancelBooking(bookingId) {
 		setLoading(true);
 		try {
-			await axios.delete(`${BASE_URL}/cancelbooking/${bookingId}`);
+			await api.delete(`/cancelbooking/${bookingId}`);
 			await getAllBookings();
 		} catch (err) {
 			console.error("Error cancelling", err);

@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import { Icon } from "leaflet";
-import axios from "axios";
+import api from "../services/api";
 import "leaflet/dist/leaflet.css";
 
 // Unsplash presets based on category selection
@@ -119,8 +119,8 @@ const EnlistCar = () => {
 		};
 
 		try {
-			const response = await axios.post(
-				`${import.meta.env.VITE_API_URL || "http://localhost:5500/api/v1"}/addcar`,
+			const response = await api.post(
+				`/addcar`,
 				carPayload
 			);
 			setSuccessMsg("Your vehicle was listed successfully!");

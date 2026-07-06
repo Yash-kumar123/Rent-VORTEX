@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 import Spinner from "../components/Spinner";
 
 const HostDashboard = () => {
@@ -13,17 +13,15 @@ const HostDashboard = () => {
 
 	const fetchHostData = async () => {
 		try {
-			const apiBase = import.meta.env.VITE_API_URL || "http://localhost:5500/api/v1";
-			
 			// 1. Fetch all cars
-			const carsRes = await axios.get(`${apiBase}/getallcars`);
+			const carsRes = await api.get("/getallcars");
 			const ownerCars = carsRes.data.filter(
 				(car) => car.owner && car.owner === user._id
 			);
 			setCars(ownerCars);
 
 			// 2. Fetch bookings for cars owned by this host
-			const bookingsRes = await axios.get(`${apiBase}/getownerbookings/${user._id}`);
+			const bookingsRes = await api.get(`/getownerbookings/${user._id}`);
 			if (bookingsRes.data && bookingsRes.data.success) {
 				setBookings(bookingsRes.data.data);
 			}
@@ -41,8 +39,7 @@ const HostDashboard = () => {
 
 	const handleStatusUpdate = async (bookingId, status) => {
 		try {
-			const apiBase = import.meta.env.VITE_API_URL || "http://localhost:5500/api/v1";
-			await axios.post(`${apiBase}/update-booking-status`, { bookingId, status });
+			await api.post("/update-booking-status", { bookingId, status });
 			alert(`Booking request has been ${status.toLowerCase()}!`);
 			fetchHostData();
 		} catch (err) {
