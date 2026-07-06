@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import { AppContext } from "../context/AppContext";
 import PayementModal from "../components/PaymentModal";
 import { Icon } from "leaflet";
@@ -21,6 +21,58 @@ const BookingPage = () => {
 	const [totalCost, setTotalCost] = useState(0);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [payment, setPayment] = useState({ status: null, paymentID: null });
+	const [searchQuery, setSearchQuery] = useState("");
+	const [searchResults, setSearchResults] = useState([]);
+	const [searching, setSearching] = useState(false);
+	const [debounceTimer, setDebounceTimer] = useState(null);
+
+	const handleSearch = async (query) => {
+		if (!query.trim() || query.length < 3) {
+			setSearchResults([]);
+			return;
+		}
+		setSearching(true);
+		try {
+			const res = await fetch(
+				`https://nominatim.openstreetmap.org/search?format=json&countrycodes=in&q=${encodeURIComponent(
+					query
+				)}`
+			);
+			const data = await res.json();
+			setSearchResults(data);
+		} catch (err) {
+			console.error("Search failed:", err);
+		} finally {
+			setSearching(false);
+		}
+	};
+
+	const onSearchChange = (value) => {
+		setSearchQuery(value);
+		if (debounceTimer) {
+			clearTimeout(debounceTimer);
+		}
+		const timer = setTimeout(() => {
+			handleSearch(value);
+		}, 400);
+		setDebounceTimer(timer);
+	};
+
+	useEffect(() => {
+		return () => {
+			if (debounceTimer) clearTimeout(debounceTimer);
+		};
+	}, [debounceTimer]);
+
+	const ChangeMapCenter = ({ center }) => {
+		const map = useMap();
+		useEffect(() => {
+			if (center) {
+				map.flyTo(center, 15);
+			}
+		}, [center, map]);
+		return null;
+	};
 	const customIcon = new Icon({
 		iconUrl: "https://cdn-icons-png.flaticon.com/512/9970/9970240.png",
 		iconSize: [45, 45],
@@ -76,10 +128,16 @@ const BookingPage = () => {
 	}, [payment.status]);
 
 	const handleInputChange = (field, value) => {
-		setFormData((prev) => ({ ...prev, [field]: value }));
-		if (["startDate", "endDate", "driverRequired"].includes(field)) {
-			calculateTotalCost({ ...formData, [field]: value });
-		}
+		setFormData((prev) => {
+			const updated = { ...prev, [field]: value };
+			if (field === "startDate" && prev.endDate && new Date(value) > new Date(prev.endDate)) {
+				updated.endDate = "";
+			}
+			if (["startDate", "endDate", "driverRequired"].includes(field)) {
+				calculateTotalCost(updated);
+			}
+			return updated;
+		});
 	};
 
 	const calculateTotalCost = (data) => {
@@ -91,6 +149,8 @@ const BookingPage = () => {
 			let cost = hours * car.rentPerHour;
 			if (driverRequired) cost += hours * 100;
 			setTotalCost(cost);
+		} else {
+			setTotalCost(0);
 		}
 	};
 
@@ -190,12 +250,58 @@ const BookingPage = () => {
 									className="w-full p-2 border rounded-lg mt-1"
 								/>
 							</label>
-							<div className="mt-4  ">
-								<label className="block text-gray-700 mt-4 ">
+							<div className="mt-4">
+								<label className="block text-gray-700 mt-4">
 									Select Pickup Location
+									
+									{/* Address Search Bar */}
+									<div className="relative mt-2 z-20">
+										<div className="flex gap-2">
+											<input
+												type="text"
+												placeholder="Search pickup address..."
+												value={searchQuery}
+												onChange={(e) => onSearchChange(e.target.value)}
+												onKeyDown={(e) => {
+													if (e.key === "Enter") {
+														e.preventDefault();
+														handleSearch(searchQuery);
+													}
+												}}
+												className="flex-1 p-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-200"
+											/>
+											<button
+												type="button"
+												onClick={() => handleSearch(searchQuery)}
+												className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition duration-300"
+											>
+												{searching ? "Searching..." : "Search"}
+											</button>
+										</div>
+										{searchResults.length > 0 && (
+											<ul className="absolute left-0 right-0 mt-1 max-h-48 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-30">
+												{searchResults.map((result) => (
+													<li
+														key={result.place_id}
+														onClick={() => {
+															const lat = parseFloat(result.lat);
+															const lng = parseFloat(result.lon);
+															setFormData((prev) => ({ ...prev, location: { lat, lng } }));
+															setSearchResults([]);
+															setSearchQuery(result.display_name);
+														}}
+														className="p-2.5 hover:bg-gray-100 cursor-pointer text-sm text-gray-700 border-b border-gray-100 last:border-0 truncate"
+													>
+														{result.display_name}
+													</li>
+												))}
+											</ul>
+										)}
+									</div>
+
 									<MapContainer
 										className=" z-10"
-										center={[28.6139, 77.209]}
+										center={formData.location ? [formData.location.lat, formData.location.lng] : [28.6139, 77.209]}
 										zoom={12}
 										style={{ marginTop: "1rem", height: 300 }}
 									>
@@ -203,6 +309,11 @@ const BookingPage = () => {
 											url={"https://tile.openstreetmap.org/{z}/{x}/{y}.png"}
 										/>
 										<LocationPicker />
+										{formData.location && (
+											<ChangeMapCenter
+												center={[formData.location.lat, formData.location.lng]}
+											/>
+										)}
 									</MapContainer>
 								</label>
 							</div>

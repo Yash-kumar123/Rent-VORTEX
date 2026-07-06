@@ -1,9 +1,9 @@
 const Booking = require("../models/booking_model");
 const Car = require("../models/cars_model");
 const User = require("../models/user_model");
-// const stripe = require("stripe")(
-// 	"sk_test_51NFtVGSAZAXtdYSkBaDemNewFODLyLvAZ4Cp8oCxI2m1ecvfG2C1cNpm1B6k6lwIQfD2f9Hxt53gG2hNGExnFVK100raNTKWo4"
-// );
+const stripe = require("stripe")(
+	process.env.STRIPE_SECRET_KEY || "sk_test_51NFtVGSAZAXtdYSkBaDemNewFODLyLvAZ4Cp8oCxI2m1ecvfG2C1cNpm1B6k6lwIQfD2f9Hxt53gG2hNGExnFVK100raNTKWo4"
+);
 
 exports.bookCar = async (req, res) => {
 	const { token } = req.body;
@@ -59,6 +59,31 @@ exports.cancelBooking = async (req, res) => {
 		return res.status(500).json({
 			success: false,
 			message: "An error occurred while canceling the booking",
+			error: error.message,
+		});
+	}
+};
+
+exports.createPaymentIntent = async (req, res) => {
+	const { amount } = req.body;
+	try {
+		const paymentIntent = await stripe.paymentIntents.create({
+			amount: Math.round(amount * 100), // amount in paise/cents
+			currency: "inr",
+			automatic_payment_methods: {
+				enabled: true,
+			},
+		});
+
+		res.status(200).json({
+			success: true,
+			clientSecret: paymentIntent.client_secret,
+		});
+	} catch (error) {
+		console.error("Stripe PaymentIntent error:", error);
+		res.status(500).json({
+			success: false,
+			message: "Failed to create Stripe PaymentIntent",
 			error: error.message,
 		});
 	}

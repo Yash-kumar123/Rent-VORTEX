@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { json, useNavigate } from "react-router-dom";
 import { CookiesProvider, useCookies } from "react-cookie";
 import axios from "axios";
@@ -71,6 +71,22 @@ function AppContextProvider({ children }) {
 			setLoading(false);
 		}
 	}
+
+	useEffect(() => {
+		const interceptor = axios.interceptors.response.use(
+			(response) => response,
+			(error) => {
+				if (error.response && error.response.status === 401) {
+					handleLogout();
+					alert("Your session has expired. Please log in again.");
+				}
+				return Promise.reject(error);
+			}
+		);
+		return () => {
+			axios.interceptors.response.eject(interceptor);
+		};
+	}, []);
 
 	async function getAllCars() {
 		setLoading(true);

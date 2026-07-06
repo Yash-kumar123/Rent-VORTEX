@@ -12,6 +12,7 @@ import AllCarBookingsPage from "./pages/AllCarBookingsPage.jsx";
 import AddCarBookingPage from "./pages/Add_car_page.jsx";
 import EditCarPage from "./pages/Edit_Car_Page.jsx";
 import SuccessPage from "./pages/SuccessPage.jsx";
+import ErrorBoundary from "./components/ErrorBoundary.jsx";
 
 const ProtectedRoute = ({ element: Component, ...rest }) => {
 	const { cookies, navigate, setUser, setIsAdmin } = useContext(AppContext);
@@ -34,37 +35,39 @@ const ProtectedRoute = ({ element: Component, ...rest }) => {
 function App() {
 	return (
 		<div className="bg-gradient-to-r from from-blue-900 via-purple-600  to-black min-h-screen w-screen m-0 p-0">
-			<Routes>
-				<Route path="/" element={<LandingPage />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/help" element={<HelpPage />} />
-				<Route path="/about" element={<AboutUs />} />
-				<Route path="/register" element={<Register />} />
-				<Route
-					path="/dashboard"
-					element={<ProtectedRoute element={Dashboard} />}
-				/>
-				<Route
-					path="/booking/:id"
-					element={<ProtectedRoute element={BookingPage} />}
-				/>
-				<Route
-					path="/carbookings"
-					element={<ProtectedRoute element={AllCarBookingsPage} />}
-				/>
-				<Route
-					path="/add-car"
-					element={<ProtectedRoute element={AddCarBookingPage} />}
-				/>
-				<Route
-					path="/edit-car/:id"
-					element={<ProtectedRoute element={EditCarPage} />}
-				/>
-				<Route
-					path="/success"
-					element={<ProtectedRoute element={SuccessPage} />}
-				/>
-			</Routes>
+			<ErrorBoundary>
+				<Routes>
+					<Route path="/" element={<LandingPage />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/help" element={<HelpPage />} />
+					<Route path="/about" element={<AboutUs />} />
+					<Route path="/register" element={<Register />} />
+					<Route
+						path="/dashboard"
+						element={<ProtectedRoute element={Dashboard} />}
+					/>
+					<Route
+						path="/booking/:id"
+						element={<ProtectedRoute element={BookingPage} />}
+					/>
+					<Route
+						path="/carbookings"
+						element={<ProtectedRoute element={AllCarBookingsPage} />}
+					/>
+					<Route
+						path="/add-car"
+						element={<ProtectedRoute element={AddCarBookingPage} />}
+					/>
+					<Route
+						path="/edit-car/:id"
+						element={<ProtectedRoute element={EditCarPage} />}
+					/>
+					<Route
+						path="/success"
+						element={<ProtectedRoute element={SuccessPage} />}
+					/>
+				</Routes>
+			</ErrorBoundary>
 		</div>
 	);
 }

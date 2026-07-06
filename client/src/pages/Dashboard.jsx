@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { Link } from "react-router-dom";
-import Spinner from "../components/Spinner";
+import SkeletonLoader from "../components/SkeletonLoader";
 import Car_Booking_Card from "./Car_Booking_Card";
 
 const Dashboard = () => {
@@ -44,9 +44,7 @@ const Dashboard = () => {
 			return matchesSearch && matchesCategory;
 		}) || [];
 
-	return loading ? (
-		<Spinner />
-	) : (
+	return (
 		<div className="p-6 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen relative">
 			{/* Top Navigation */}
 			<div className="flex justify-between items-center mb-6 relative z-50">
@@ -129,7 +127,7 @@ const Dashboard = () => {
 
 			{/* Cars Display */}
 			{loading ? (
-				<Spinner />
+				<SkeletonLoader />
 			) : (
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 					{filteredCars.map((car) => (
