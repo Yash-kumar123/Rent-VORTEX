@@ -102,15 +102,19 @@ const GetAllBookings = () => {
 											Type: {booking.car.type}
 										</p>
 										<p className="text-sm text-gray-500">
-											Location:
-											<a
-												href={`https://www.google.com/maps?q=${booking.location.lat},${booking.location.lng}`}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="text-blue-600 underline"
-											>
-												{booking.location.lat}, {booking.location.lng}
-											</a>
+											Location:{" "}
+											{booking.location && booking.location.lat && booking.location.lng ? (
+												<a
+													href={`https://www.google.com/maps?q=${booking.location.lat},${booking.location.lng}`}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="text-blue-600 underline"
+												>
+													{booking.location.lat.toFixed(4)}, {booking.location.lng.toFixed(4)}
+												</a>
+											) : (
+												"Not Specified"
+											)}
 										</p>
 									</div>
 								</div>

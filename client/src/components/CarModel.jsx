@@ -4,8 +4,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 export function initCarModel() {
 	const container = document.getElementById("car-model-container");
-	console.log(container.offsetHeight);
-	console.log(container.offsetWidth);
+
 
 	// Scene, Camera, and Renderer
 	const scene = new THREE.Scene();

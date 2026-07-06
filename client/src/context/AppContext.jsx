@@ -13,7 +13,7 @@ function AppContextProvider({ children }) {
 	const [cars, setCars] = useState([]);
 	const [bookings, setBookings] = useState([]);
 	// const BASE_URL = "http://localhost:5500/api/v1";
-	const BASE_URL = "https://rent-vortex.onrender.com/api/v1";
+	const BASE_URL = import.meta.env.VITE_API_URL || "https://rent-vortex.onrender.com/api/v1";
 	const [cookies, setCookie, removeCookie] = useCookies();
 
 	async function handleLogin(data) {
@@ -119,14 +119,12 @@ function AppContextProvider({ children }) {
 		}
 	}
 	async function makeBooking(bookingData) {
-		console.log(bookingData);
 		setLoading(true);
 		try {
-			const res = await axios.post(`${BASE_URL}/bookCar`, bookingData);
-			setCars(res.data);
-			console.log(res);
+			await axios.post(`${BASE_URL}/bookCar`, bookingData);
+			await getAllCars();
 		} catch (err) {
-			console.error("Error getting cars data", err);
+			console.error("Error making booking", err);
 		} finally {
 			setLoading(false);
 		}
@@ -142,11 +140,11 @@ function AppContextProvider({ children }) {
 			setLoading(false);
 		}
 	}
-	async function cancelBooking(carID) {
+	async function cancelBooking(bookingId) {
 		setLoading(true);
 		try {
-			const res = await axios.delete(`${BASE_URL}/cancelbooking/${carID}`);
-			setBookings(res.data);
+			await axios.delete(`${BASE_URL}/cancelbooking/${bookingId}`);
+			await getAllBookings();
 		} catch (err) {
 			console.error("Error cancelling", err);
 		} finally {

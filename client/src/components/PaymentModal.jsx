@@ -3,7 +3,6 @@ import { AppContext } from "../context/AppContext";
 
 const PaymentModal = (props) => {
 	const [amount, setIsModalOpen, setPayment] = props.props;
-	console.log(amount, setIsModalOpen, setPayment);
 
 	const [formData, setFormData] = useState({
 		cardName: "",
@@ -20,7 +19,6 @@ const PaymentModal = (props) => {
 			return;
 		}
 		try {
-			alert("Payment successful!");
 			const array = new Uint32Array(1);
 			window.crypto.getRandomValues(array);
 			const paymentID = `PAY-${array[0].toString(16).toUpperCase()}`;

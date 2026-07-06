@@ -56,11 +56,11 @@ const BookingPage = () => {
 					};
 					// console.log(bookingData);
 					await makeBooking(bookingData); // Ensure the function `bookCar` matches your implementation
+					navigate("/success", { state: { transactionId: payment.paymentID } });
 				} catch (err) {
 					console.error("Error while booking:", err);
 				} finally {
 					setLoading(false);
-					navigate("/dashboard");
 				}
 			} else if (payment.status === "failed") {
 				alert("Payment Failed. Please Try Again");
@@ -80,7 +80,6 @@ const BookingPage = () => {
 		if (["startDate", "endDate", "driverRequired"].includes(field)) {
 			calculateTotalCost({ ...formData, [field]: value });
 		}
-		console.log(formData);
 	};
 
 	const calculateTotalCost = (data) => {
@@ -105,7 +104,6 @@ const BookingPage = () => {
 				}));
 			},
 		});
-		console.log(formData.location);
 
 		return formData.location ? (
 			<Marker

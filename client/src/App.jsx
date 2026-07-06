@@ -11,6 +11,7 @@ import BookingPage from "./pages/BookingPage.jsx";
 import AllCarBookingsPage from "./pages/AllCarBookingsPage.jsx";
 import AddCarBookingPage from "./pages/Add_car_page.jsx";
 import EditCarPage from "./pages/Edit_Car_Page.jsx";
+import SuccessPage from "./pages/SuccessPage.jsx";
 
 const ProtectedRoute = ({ element: Component, ...rest }) => {
 	const { cookies, navigate, setUser, setIsAdmin } = useContext(AppContext);
@@ -58,6 +59,10 @@ function App() {
 				<Route
 					path="/edit-car/:id"
 					element={<ProtectedRoute element={EditCarPage} />}
+				/>
+				<Route
+					path="/success"
+					element={<ProtectedRoute element={SuccessPage} />}
 				/>
 			</Routes>
 		</div>

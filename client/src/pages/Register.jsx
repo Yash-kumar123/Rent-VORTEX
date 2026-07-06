@@ -27,10 +27,9 @@ function Register() {
 			setError("Password doesn't match.");
 			return;
 		}
-		delete formData.confirmPassword;
-		console.log(formData);
 
-		handleRegister(formData);
+		const { confirmPassword, ...registerData } = formData;
+		handleRegister(registerData);
 	};
 
 	return (
