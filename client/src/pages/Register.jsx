@@ -36,16 +36,18 @@ function Register() {
 		<div className="register h-screen flex items-center justify-center bg-gradient-to-r from-blue-900 via-purple-600 to-black">
 			{loading && <Spinner />}
 			<div className="flex w-full">
-				<div className=" relative w-2/3">
+				<div className=" relative w-2/3 overflow-hidden">
 					<img
-						className="w-[900px] h-full object-left object-cover"
-						src="https://www.shutterstock.com/image-photo/front-view-led-headlights-modern-600nw-2065741064.jpg"
-						alt="Car Rental"
+						className="w-full h-full object-cover"
+						src="https://images.unsplash.com/photo-1617469767246-da1e1a3d62e9?w=1200&auto=format&fit=crop"
+						alt="Bugatti Chiron - Rent VORTEX"
 						loading="lazy"
 					/>
-					<h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-5xl font-bold">
-						Car Rental
-					</h1>
+					<div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-transparent flex items-center justify-center">
+						<h1 className="text-white text-5xl font-bold drop-shadow-lg">
+							Rent VORTEX
+						</h1>
+					</div>
 				</div>
 
 				<div className="lg:w-1/3 bg-white p-6 rounded-lg shadow-lg mx-4">

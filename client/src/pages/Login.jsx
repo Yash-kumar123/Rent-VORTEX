@@ -1,8 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
-import Img4 from "../assets/Car-img4.jpg";
-import { initCarModel } from "../components/CarModel";
 import { AppContext } from "../context/AppContext";
 
 function Login() {
@@ -13,9 +11,7 @@ function Login() {
 		password: "",
 	});
 
-	useEffect(() => {
-		initCarModel();
-	}, []);
+
 
 	const togglePasswordVisibility = () => {
 		setShowPassword((prev) => !prev);
@@ -47,11 +43,16 @@ function Login() {
 							loading="lazy"
 						/>
 					</div> */}
-					<div className="w-2/3 my-auto flex justify-center items-center" loading="lazy">
-						<div
-							id="car-model-container"
-							className="w-full h-[80%] bg-transparent overflow-hidden "
-						></div>
+					<div className="w-2/3 relative overflow-hidden">
+						<img
+							className="w-full h-full object-cover"
+							src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1200&auto=format&fit=crop"
+							alt="BMW M4 - Rent VORTEX"
+							loading="lazy"
+						/>
+						<div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-transparent flex items-center justify-center">
+							<h2 className="text-white text-4xl font-extrabold drop-shadow-lg tracking-wide">Rent VORTEX</h2>
+						</div>
 					</div>
 					<div className="w-1/3 bg-white p-6 rounded-lg shadow-lg m-4">
 						<form className="text-left">
