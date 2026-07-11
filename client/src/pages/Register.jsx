@@ -39,7 +39,7 @@ function Register() {
 				<div className=" relative w-2/3 overflow-hidden">
 					<img
 						className="w-full h-full object-cover"
-						src="https://images.unsplash.com/photo-1617469767246-da1e1a3d62e9?w=1200&auto=format&fit=crop"
+						src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&auto=format&fit=crop"
 						alt="Bugatti Chiron - Rent VORTEX"
 						loading="lazy"
 					/>
