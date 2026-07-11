@@ -6,7 +6,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+# Environment files — never commit secrets
 .env
+.env.development
+.env.production
+.env.local
 node_modules
 dist
 dist-ssr
