@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import P1 from "../assets/person_1.jpg";
-import P3 from "../assets/person_2.jpg"; // Add team member images
 import P2 from "../assets/person_3.jpg";
 import Celio from "../assets/celerio.jpg";
 import Lux from "../assets/Luxury.jpg";
@@ -93,22 +91,16 @@ const AboutUs = () => {
           <p className="text-lg mb-12 max-w-2xl mx-auto">
             At Rent Vortex, our dedicated team works tirelessly to provide an exceptional experience for our customers.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-            {[
-              { name: "Shishir Shukla",  image: P1 },
-              { name: "Yash Kumar",  image: P2 },
-              { name: "Yash Kumar",  image: P3 },
-            ].map((member, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-32 h-32 rounded-full mx-auto mb-4"
-                />
-                <h3 className="text-xl font-semibold text-gray-800">{member.name}</h3>
-                <p className="mt-2 text-gray-600">{member.role}</p>
-              </div>
-            ))}
+          <div className="flex justify-center">
+            <div className="bg-white p-6 rounded-lg shadow-md text-center max-w-xs">
+              <img
+                src={P2}
+                alt="Yash Kumar"
+                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover grayscale"
+              />
+              <h3 className="text-xl font-semibold text-gray-800">Yash Kumar</h3>
+              <p className="mt-2 text-gray-600">Full Stack Developer</p>
+            </div>
           </div>
         </div>
       </section>

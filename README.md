@@ -1,4 +1,4 @@
-﻿# 🚗 Rent VORTEX — Car Rental Platform
+# 🚗 Rent VORTEX — Car Rental Platform
 
 > A full-stack, peer-to-peer car rental web application. Rent cars from real hosts near you, or list your own vehicle and earn money — all in one platform.
 
@@ -302,7 +302,7 @@ Key mobile adaptations:
 ## 👨‍💻 Authors
 
 | Name | Role |
-
+|---|---|
 | **Yash Kumar** | Full Stack Developer |
 
 ---
