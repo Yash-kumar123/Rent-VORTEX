@@ -302,8 +302,7 @@ Key mobile adaptations:
 ## 👨‍💻 Authors
 
 | Name | Role |
-|---|---|
-| **Shishir Shukla** | Full Stack Developer |
+
 | **Yash Kumar** | Full Stack Developer |
 
 ---
