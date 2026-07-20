@@ -11,15 +11,15 @@ const AboutUs = () => {
   return (
     <div className="bg-gray-50 text-gray-900">
       {/* Hero Section */}
-      <section className="relative bg-blue-600 text-white text-center py-20">
+      <section className="relative bg-blue-600 text-white text-center py-12 sm:py-20 px-4">
         <Link
           to="/"
-          className="absolute top-4 left-4 bg-white text-blue-600 py-2 px-4 rounded-full shadow-md font-bold hover:bg-blue-100"
+          className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white text-blue-600 py-1.5 px-3 sm:py-2 sm:px-4 rounded-full shadow-md font-bold hover:bg-blue-100 text-sm sm:text-base"
         >
           Home
         </Link>
-        <h1 className="text-4xl font-extrabold mb-4">About Rent Vortex</h1>
-        <p className="text-lg max-w-2xl mx-auto">
+        <h1 className="text-2xl sm:text-4xl font-extrabold mb-3 sm:mb-4 mt-8 sm:mt-0">About Rent Vortex</h1>
+        <p className="text-base sm:text-lg max-w-2xl mx-auto">
           Your Trusted Partner for Reliable Car Rentals
         </p>
       </section>

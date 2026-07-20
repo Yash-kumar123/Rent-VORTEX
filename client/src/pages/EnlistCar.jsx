@@ -136,8 +136,8 @@ const EnlistCar = () => {
 	};
 
 	return (
-		<div className="p-8 min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300">
-			<div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-6 relative">
+		<div className="p-4 sm:p-8 min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300">
+			<div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-4 sm:p-6 relative">
 				<button
 					onClick={() => navigate("/host-dashboard")}
 					className="mb-4 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-300"

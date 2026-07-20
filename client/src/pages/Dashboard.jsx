@@ -54,7 +54,7 @@ const Dashboard = () => {
 		}) || [];
 
 	return (
-		<div className="p-6 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen relative">
+		<div className="p-3 sm:p-6 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen relative">
 			{/* Top Navigation */}
 			<div className="flex justify-between items-center mb-6 relative z-50">
 				{/* Home Button */}
@@ -69,7 +69,7 @@ const Dashboard = () => {
 				<input
 					type="text"
 					placeholder="Search cars..."
-					className="p-2 w-3/4 md:w-1/3 bg-white rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+					className="p-2 w-1/2 sm:w-1/3 bg-white rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
 				/>

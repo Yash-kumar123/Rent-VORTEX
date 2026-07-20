@@ -174,10 +174,10 @@ const BookingPage = () => {
 	});
 
 	return (
-		<div className="p-8 min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300">
-			<div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 relative">
-				<div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
-					<h1 className="text-3xl font-extrabold text-blue-600 bg-blue-100 py-2 px-4 rounded-full shadow">
+		<div className="p-4 sm:p-8 min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300">
+			<div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-6">
+				<div className="mb-4 text-center">
+					<h1 className="text-2xl sm:text-3xl font-extrabold text-blue-600 bg-blue-100 py-2 px-4 rounded-full shadow inline-block">
 						Booking Details
 					</h1>
 				</div>
@@ -199,28 +199,17 @@ const BookingPage = () => {
 							/>
 						</div>
 
-						<div className="mt-6 text-gray-800">
-							<h2 className="text-2xl font-semibold text-blue-600">
+						<div className="mt-4 text-gray-800">
+							<h2 className="text-xl sm:text-2xl font-semibold text-blue-600">
 								{car.name}
 							</h2>
-							<div className="mt-4 grid grid-cols-2 gap-4">
+							<div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
 								<div className="text-sm font-medium text-gray-600">
-									<p>
-										<span className="font-bold text-gray-800">Capacity:</span>{" "}
-										{car.capacity} People
-									</p>
-									<p>
-										<span className="font-bold text-gray-800">Fuel Type:</span>{" "}
-										{car.fuelType}
-									</p>
+									<p><span className="font-bold text-gray-800">Capacity:</span>{" "}{car.capacity} People</p>
+									<p><span className="font-bold text-gray-800">Fuel Type:</span>{" "}{car.fuelType}</p>
 								</div>
 								<div className="text-sm font-medium text-gray-600">
-									<p>
-										<span className="font-bold text-gray-800">
-											Rent Per Hour:
-										</span>{" "}
-										₹{car.rentPerHour}
-									</p>
+									<p><span className="font-bold text-gray-800">Rent Per Hour:</span>{" "}₹{car.rentPerHour}</p>
 								</div>
 							</div>
 						</div>
@@ -300,10 +289,10 @@ const BookingPage = () => {
 									</div>
 
 									<MapContainer
-										className=" z-10"
+										className="z-10"
 										center={formData.location ? [formData.location.lat, formData.location.lng] : [28.6139, 77.209]}
 										zoom={12}
-										style={{ marginTop: "1rem", height: 300 }}
+										style={{ marginTop: "1rem", height: typeof window !== 'undefined' && window.innerWidth < 640 ? 220 : 300 }}
 									>
 										<TileLayer
 											url={"https://tile.openstreetmap.org/{z}/{x}/{y}.png"}
@@ -334,15 +323,15 @@ const BookingPage = () => {
 						<div className="mt-4 text-xl font-bold text-gray-800">
 							Total Cost: ₹{totalCost || "0"}
 						</div>
-						<div className="mt-8 flex justify-center gap-4">
+						<div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
 							<button
 								onClick={() => setIsModalOpen(true)}
-								className="px-6 py-2 bg-gradient-to-r from-green-400 to-green-600 text-white font-bold rounded-lg shadow-md hover:from-green-500 hover:to-green-700 transition duration-300"
+								className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-green-400 to-green-600 text-white font-bold rounded-lg shadow-md hover:from-green-500 hover:to-green-700 transition duration-300"
 							>
 								Proceed to Payment
 							</button>
 							<button
-								className="px-6 py-2 bg-gradient-to-r from-gray-400 to-gray-600 text-white font-bold rounded-lg shadow-md hover:from-gray-500 hover:to-gray-700 transition duration-300"
+								className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-gray-400 to-gray-600 text-white font-bold rounded-lg shadow-md hover:from-gray-500 hover:to-gray-700 transition duration-300"
 								onClick={() => navigate("/dashboard")}
 							>
 								Cancel

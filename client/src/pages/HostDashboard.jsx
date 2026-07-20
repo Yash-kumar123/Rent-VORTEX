@@ -128,39 +128,39 @@ const HostDashboard = () => {
 				</div>
 
 				{/* Dashboard Navigation Tabs */}
-				<div className="flex bg-white p-1 rounded-xl shadow-sm border border-gray-100 w-full sm:w-fit">
+				<div className="flex flex-wrap bg-white p-1 rounded-xl shadow-sm border border-gray-100 w-full gap-1">
 					<button
 						type="button"
 						onClick={() => setActiveTab("earnings")}
-						className={`py-2.5 px-6 text-sm font-semibold rounded-lg transition ${
+						className={`flex-1 py-2 px-3 sm:px-6 text-xs sm:text-sm font-semibold rounded-lg transition ${
 							activeTab === "earnings"
 								? "bg-blue-600 text-white shadow-sm"
 								: "text-gray-600 hover:text-gray-800"
 						}`}
 					>
-						📊 Earnings History
+						📊 Earnings
 					</button>
 					<button
 						type="button"
 						onClick={() => setActiveTab("listings")}
-						className={`py-2.5 px-6 text-sm font-semibold rounded-lg transition ${
+						className={`flex-1 py-2 px-3 sm:px-6 text-xs sm:text-sm font-semibold rounded-lg transition ${
 							activeTab === "listings"
 								? "bg-blue-600 text-white shadow-sm"
 								: "text-gray-600 hover:text-gray-800"
 						}`}
 					>
-						🚗 Your Listings ({totalListings})
+						🚗 Listings ({totalListings})
 					</button>
 					<button
 						type="button"
 						onClick={() => setActiveTab("requests")}
-						className={`py-2.5 px-6 text-sm font-semibold rounded-lg transition ${
+						className={`flex-1 py-2 px-3 sm:px-6 text-xs sm:text-sm font-semibold rounded-lg transition ${
 							activeTab === "requests"
 								? "bg-blue-600 text-white shadow-sm"
 								: "text-gray-600 hover:text-gray-800"
 						}`}
 					>
-						📅 Rental Bookings ({bookingsCount})
+						📅 Bookings ({bookingsCount})
 					</button>
 				</div>
 

@@ -8,13 +8,13 @@ const HelpPage = () => {
   return (
     <div className="bg-gray-50">
       {/* Header */}
-      <header className="bg-gradient-to-r from-purple-100 to-indigo-00 text-white py-6 text-center">
-        <div className="flex justify-between items-center px-6">
+      <header className="bg-gradient-to-r from-purple-100 to-indigo-100 text-white py-4 sm:py-6 text-center">
+        <div className="flex justify-between items-center px-4 sm:px-6">
           {/* Home Button */}
-          <a href="/" className="px-4 py-2 bg-purple-600 text-white rounded-lg text-lg">
+          <a href="/" className="px-3 py-1.5 sm:px-4 sm:py-2 bg-purple-600 text-white rounded-lg text-sm sm:text-lg">
             Home
           </a>
-          <h1 className="text-4xl font-extrabold text-rose-600 font-Roboto">Help</h1>
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-rose-600 font-Roboto">Help</h1>
           <div></div> {/* Empty div for spacing */}
         </div>
       </header>

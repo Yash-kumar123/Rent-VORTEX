@@ -33,10 +33,11 @@ function Register() {
 	};
 
 	return (
-		<div className="register h-screen flex items-center justify-center bg-gradient-to-r from-blue-900 via-purple-600 to-black">
+		<div className="register min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-900 via-purple-600 to-black px-4 py-8">
 			{loading && <Spinner />}
-			<div className="flex w-full">
-				<div className=" relative w-2/3 overflow-hidden">
+			<div className="flex w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl">
+				{/* Side image — hidden on mobile */}
+				<div className="hidden md:block md:w-2/3 relative">
 					<img
 						className="w-full h-full object-cover"
 						src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&auto=format&fit=crop"
@@ -50,44 +51,46 @@ function Register() {
 					</div>
 				</div>
 
-				<div className="lg:w-1/3 bg-white p-6 rounded-lg shadow-lg mx-4">
+				{/* Form Panel */}
+				<div className="w-full md:w-1/3 bg-white p-6 sm:p-8 flex flex-col justify-center">
+					{/* Mobile-only brand title */}
+					<div className="md:hidden text-center mb-5">
+						<h2 className="text-2xl font-extrabold text-purple-700 tracking-wide">Rent VORTEX</h2>
+						<p className="text-gray-500 text-sm mt-1">Create your account</p>
+					</div>
+
 					<form onSubmit={handleSubmit} className="text-left">
-						<h1 className="text-3xl font-semibold text-gray-700 mb-4">
+						<h1 className="text-2xl sm:text-3xl font-semibold text-gray-700 mb-4">
 							Register
 						</h1>
 						<hr className="border-gray-300 mb-4" />
 
 						{/* Name Input */}
-						<div className="mb-4">
-							<label
-								htmlFor="Name"
-								className="block text-lg font-semibold text-gray-700 mb-2"
-							>
+						<div className="mb-3">
+							<label htmlFor="Name" className="block text-sm sm:text-lg font-semibold text-gray-700 mb-2">
 								Name
 							</label>
 							<input
 								id="name"
-								type="name"
+								type="text"
 								name="name"
-								className="w-full p-3 border border-gray-300 rounded-lg"
+								className="w-full p-3 border border-gray-300 rounded-lg text-sm sm:text-base"
 								value={formData.name}
 								onChange={handleInputChange}
 								required
 							/>
 						</div>
+
 						{/* Email Input */}
-						<div className="mb-4">
-							<label
-								htmlFor="email"
-								className="block text-lg font-semibold text-gray-700 mb-2"
-							>
+						<div className="mb-3">
+							<label htmlFor="email" className="block text-sm sm:text-lg font-semibold text-gray-700 mb-2">
 								Email
 							</label>
 							<input
 								id="email"
 								type="text"
 								name="email"
-								className="w-full p-3 border border-gray-300 rounded-lg"
+								className="w-full p-3 border border-gray-300 rounded-lg text-sm sm:text-base"
 								value={formData.email}
 								onChange={handleInputChange}
 								required
@@ -95,18 +98,15 @@ function Register() {
 						</div>
 
 						{/* Password Input */}
-						<div className="mb-4">
-							<label
-								htmlFor="password"
-								className="block text-lg font-semibold text-gray-700 mb-2"
-							>
+						<div className="mb-3">
+							<label htmlFor="password" className="block text-sm sm:text-lg font-semibold text-gray-700 mb-2">
 								Password
 							</label>
 							<input
 								id="password"
 								type="password"
 								name="password"
-								className="w-full p-3 border border-gray-300 rounded-lg"
+								className="w-full p-3 border border-gray-300 rounded-lg text-sm sm:text-base"
 								value={formData.password}
 								onChange={handleInputChange}
 								required
@@ -114,18 +114,15 @@ function Register() {
 						</div>
 
 						{/* Confirm Password Input */}
-						<div className="mb-6">
-							<label
-								htmlFor="confirmPassword"
-								className="block text-lg font-semibold text-gray-700 mb-2"
-							>
+						<div className="mb-5">
+							<label htmlFor="confirmPassword" className="block text-sm sm:text-lg font-semibold text-gray-700 mb-2">
 								Confirm Password
 							</label>
 							<input
 								id="confirmPassword"
 								type="password"
 								name="confirmPassword"
-								className="w-full p-3 border border-gray-300 rounded-lg"
+								className="w-full p-3 border border-gray-300 rounded-lg text-sm sm:text-base"
 								value={formData.confirmPassword}
 								onChange={handleInputChange}
 								required
@@ -138,7 +135,7 @@ function Register() {
 						{/* Submit Button */}
 						<button
 							type="submit"
-							className="w-full bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700 transition duration-300"
+							className="w-full bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700 transition duration-300 font-semibold"
 						>
 							Register
 						</button>
@@ -146,10 +143,7 @@ function Register() {
 						<hr className="my-4 border-gray-300" />
 
 						<div className="text-center">
-							<Link
-								to="/login"
-								className="text-purple-600 hover:underline text-lg"
-							>
+							<Link to="/login" className="text-purple-600 hover:underline text-sm sm:text-lg">
 								Already have an account? Login here
 							</Link>
 						</div>
@@ -159,7 +153,7 @@ function Register() {
 					<div className="mt-4 text-center">
 						<button
 							onClick={() => navigate("/")}
-							className="w-full bg-gray-600 text-white p-3 rounded-lg hover:bg-gray-700 transition duration-300"
+							className="w-full bg-gray-600 text-white p-3 rounded-lg hover:bg-gray-700 transition duration-300 font-semibold"
 						>
 							Back to Home
 						</button>
