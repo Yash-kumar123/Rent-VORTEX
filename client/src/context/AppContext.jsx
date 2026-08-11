@@ -18,7 +18,7 @@ function AppContextProvider({ children }) {
 		setLoading(true);
 
 		try {
-			const response = await api.post("/login", data);
+			const response = await api.post("/login", data, { timeout: 120000 });
 			console.log("Login successful:", response.data);
 
 			setUser(response.data.exisitingUser);
@@ -32,7 +32,11 @@ function AppContextProvider({ children }) {
 			navigate("/dashboard");
 		} catch (err) {
 			console.log("Login error:", err.response?.data || err.message);
-			alert(err.response?.data.message);
+			if (err.code === "ECONNABORTED" || err.message?.includes("timeout")) {
+				alert("Server request timed out. The Render backend may be waking up, please try again in a few seconds.");
+			} else {
+				alert(err.response?.data?.message || "Login failed. Please try again.");
+			}
 		} finally {
 			setLoading(false);
 		}
@@ -42,12 +46,17 @@ function AppContextProvider({ children }) {
 		setLoading(true);
 		try {
 			data.role = "User";
-			const response = await api.post("/register", data);
+			const response = await api.post("/register", data, { timeout: 120000 });
 			console.log("Register:", response);
 
 			navigate("/login");
 		} catch (err) {
 			console.error("Register error:", err.response?.data || err.message);
+			if (err.code === "ECONNABORTED" || err.message?.includes("timeout")) {
+				alert("Server request timed out. The Render backend may be waking up, please try again in a few seconds.");
+			} else {
+				alert(err.response?.data?.message || "Registration failed. Please try again.");
+			}
 		} finally {
 			setLoading(false);
 		}
